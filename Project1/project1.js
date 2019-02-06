@@ -25,6 +25,8 @@ MYTODO.addItems = function () {
         document.getElementById("list-container").appendChild(newListItem);
     }
 
+    MYTODO.Save();
+
 }
 MYTODO.ButtonDelete = function () {
     document.querySelector('#btnRemove').addEventListener('click', function deleteItem(event) {
@@ -37,13 +39,18 @@ MYTODO.ButtonDelete = function () {
             }
             firstItem = temp;
         }
+
+    MYTODO.Save();
     });
     document.getElementById('list-container').addEventListener('click' , function deleteIcon(){
         if(event.target.id === "close-icon") {
 
             event.target.parentElement.remove();
         }
-    })
+
+    MYTODO.Save();
+    });
+
 }
 MYTODO.selectAll = function ()
 {
@@ -59,8 +66,19 @@ MYTODO.selectAll = function ()
             firstItem.querySelector(`[data-name="check-box"]`).checked = select_deselect;
             firstItem = firstItem.nextElementSibling;
         }
+
+    MYTODO.Save();
     });
 }
+MYTODO.Save = function() {
+    var listContainer = document.getElementById("list-container").innerHTML;
+    localStorage.setItem("listContainerInnerHtml", listContainer);
+};
+MYTODO.Reload  = function () {
+    var listContainer = document.getElementById("list-container");
+    listContainer.innerHTML = localStorage.getItem("listContainerInnerHtml");
+};
+MYTODO.Reload();
 MYTODO.ButtonAdd();
 MYTODO.ButtonDelete();
 MYTODO.selectAll();
